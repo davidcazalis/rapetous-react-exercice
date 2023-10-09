@@ -2,12 +2,12 @@ import { useApiClient } from "@/components/ApiClient";
 
 const Layout = () => {
   return (
-    <div className="main">
+    <>
       <Header />
-      <main>
+      <main className="container mx-auto px-4">
         <Outlet />
       </main>
-    </div>
+    </>
   );
 };
 
