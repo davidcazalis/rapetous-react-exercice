@@ -35,11 +35,15 @@ export class APIClient {
     this.totalCharacters = 1563;
   }
 
-  private async filterCharactersCriteria(characters: MarvelApiCharacter[]) {
-    const charactersIds = await this.getCharactersFromDB().then(
+  private async charactersIdsFromDB() {
+    return await this.getCharactersFromDB().then(
       (charactersFromDB) =>
         charactersFromDB?.map((character) => character.id) ?? []
     );
+  }
+
+  private async filterCharactersCriteria(characters: MarvelApiCharacter[]) {
+    const charactersIds = await this.charactersIdsFromDB();
     return characters.filter((character) => {
       return (
         !charactersIds.includes(character.id) &&
@@ -113,14 +117,12 @@ export class APIClient {
 
   private async getRandomCharactersFromAPI(count: number = 1) {
     const offset = getRandomNumber(this.totalCharacters, 1);
-    console.info("Get a random character from Marvel API", offset);
     return await this.getCharactersFromMarvelApi({ offset, limit: count }).then(
       (characters) => characters?.map(mappingMarvelApiToDBCharacter)
     );
   }
 
   public async getRandomCharacterFromAPI() {
-    console.info("Get a random character from Marvel API");
     const randomCharactersFromApi =
       (await this.getRandomCharactersFromAPI(99)) ?? [];
     if (randomCharactersFromApi.length) {
@@ -135,7 +137,6 @@ export class APIClient {
   }
 
   public async getRandomCharacterFromDB() {
-    console.info("Get a random character from DB");
     try {
       const character = await this.client.execute(
         "SELECT * FROM marvel_characters ORDER BY RANDOM() LIMIT 1"
@@ -245,7 +246,6 @@ export class APIClient {
   }
 
   public async getCharactersWithoutVotes() {
-    console.info("Get characters from DB who as never won a battle");
     try {
       const characters = await this.client.execute(
         "SELECT * FROM marvel_characters WHERE id NOT IN (SELECT stronger_character_id FROM marvel_characters_vote)"
