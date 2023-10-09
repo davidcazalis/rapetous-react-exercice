@@ -1,10 +1,25 @@
 import { useApiClient } from "@/components/ApiClient";
 
-function App() {
-  const client = useApiClient();
-  client.getCharactersFromDB().then(console.log);
+const Layout = () => {
+  return (
+    <div className="main">
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+    </div>
+  );
+};
 
-  return <div>Hello World</div>;
-}
-
-export default App;
+export const App = () => {
+  return (
+    <div>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="*" element={<ErrorNotFoundPage />} />
+        </Route>
+      </Routes>
+    </div>
+  );
+};
