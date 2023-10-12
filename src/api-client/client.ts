@@ -231,7 +231,6 @@ export class ApiClient {
   }
 
   public async addVote(stronger: MarvelCharacter, weaker: MarvelCharacter) {
-    console.log(stronger, weaker);
     try {
       await this.client.execute({
         sql: "INSERT INTO marvel_characters_vote VALUES (:id, :created_at, :stronger_character_id, :weaker_character_id)",
