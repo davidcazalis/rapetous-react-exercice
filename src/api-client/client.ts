@@ -55,7 +55,7 @@ export class ApiClient {
     id?: number;
     limit?: number;
     offset?: number;
-    unfiltred?: boolean;
+    unfiltered?: boolean;
   }) {
     const url = new URL(`http://gateway.marvel.com/v1/public/characters`);
 
@@ -76,14 +76,16 @@ export class ApiClient {
       const data = await response.json();
       const characters = data.data.results as MarvelApiCharacter[];
 
-      if (options?.unfiltred || options?.id) {
+      if (options?.unfiltered || options?.id) {
         return characters;
       }
 
-      const filtredCharacters = await this.filterCharactersCriteria(characters);
-      if (filtredCharacters.length) {
-        await this.addCharacters(filtredCharacters);
-        return filtredCharacters;
+      const filteredCharacters = await this.filterCharactersCriteria(
+        characters
+      );
+      if (filteredCharacters.length) {
+        await this.addCharacters(filteredCharacters);
+        return filteredCharacters;
       }
     } catch (error) {
       console.error(error);
@@ -146,23 +148,35 @@ export class ApiClient {
   }
 
   public async getRandomCharacter(excludeIds: number[] = []) {
-    const charactersWithoutVotes = await this.getCharactersWithoutVotes();
+    const doNotSearchForCharacterWithoutVotes = Math.random() < 0.5;
 
-    if (charactersWithoutVotes && charactersWithoutVotes.length > 0) {
-      const randomIndex = getRandomNumber(charactersWithoutVotes.length - 1, 0);
-      const character = charactersWithoutVotes[randomIndex];
-      if (!excludeIds.includes(character.id)) {
-        return character;
-      } else {
-        console.info("Random character from DB is excluded ...");
-        return this.getRandomCharacterFromAPI();
-      }
-    } else {
+    const randomCharacter = async () => {
       const characterFromDB = await this.getRandomCharacterFromDB();
       if (characterFromDB && !excludeIds.includes(characterFromDB.id)) {
         return characterFromDB;
       } else {
         return this.getRandomCharacterFromAPI();
+      }
+    };
+
+    if (doNotSearchForCharacterWithoutVotes) {
+      return randomCharacter();
+    } else {
+      const charactersWithoutVotes = await this.getCharactersWithoutVotes();
+      if (charactersWithoutVotes && charactersWithoutVotes.length > 0) {
+        const randomIndex = getRandomNumber(
+          charactersWithoutVotes.length - 1,
+          0
+        );
+        const character = charactersWithoutVotes[randomIndex];
+        if (!excludeIds.includes(character.id)) {
+          return character;
+        } else {
+          console.info("Random character from DB is excluded ...");
+          return this.getRandomCharacterFromAPI();
+        }
+      } else {
+        return randomCharacter();
       }
     }
   }
@@ -217,13 +231,14 @@ export class ApiClient {
   }
 
   public async addVote(stronger: MarvelCharacter, weaker: MarvelCharacter) {
+    console.log(stronger, weaker);
     try {
       await this.client.execute({
         sql: "INSERT INTO marvel_characters_vote VALUES (:id, :created_at, :stronger_character_id, :weaker_character_id)",
         args: {
           id: null,
-          weaker_character_id: stronger.id,
-          stronger_character_id: weaker.id,
+          weaker_character_id: weaker.id,
+          stronger_character_id: stronger.id,
           created_at: new Date(),
         },
       });
@@ -249,6 +264,30 @@ export class ApiClient {
         "SELECT * FROM marvel_characters WHERE id NOT IN (SELECT stronger_character_id FROM marvel_characters_vote)"
       );
       return characters.rows as unknown as MarvelCharacter[];
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  public async getWeakerCharacters(id: number) {
+    try {
+      const votes = await this.client.execute({
+        sql: "SELECT marvel_characters.*, marvel_characters_vote.weaker_character_id FROM marvel_characters_vote LEFT JOIN marvel_characters ON marvel_characters_vote.weaker_character_id = marvel_characters.id WHERE stronger_character_id = :id",
+        args: { id },
+      });
+      return votes.rows as unknown as MarvelCharacter[];
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  public async getStrongerCharacters(id: number) {
+    try {
+      const votes = await this.client.execute({
+        sql: "SELECT marvel_characters.*, marvel_characters_vote.stronger_character_id FROM marvel_characters_vote LEFT JOIN marvel_characters ON marvel_characters_vote.stronger_character_id = marvel_characters.id WHERE weaker_character_id = :id",
+        args: { id },
+      });
+      return votes.rows as unknown as MarvelCharacter[];
     } catch (error) {
       console.error(error);
     }
