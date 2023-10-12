@@ -32,7 +32,7 @@ Vous pouvez utilisez les librairies que vous voulez, composants UI ou utilitaire
 On utilise l'API Marvel (https://developer.marvel.com/docs) pour récupérer les personnages. Pour se connecter à cette API : 
 * [Se connecter / Créer un compte](https://developer.marvel.com/signup)
 * Récupérer votre clé public sur [My Developer Account](https://developer.marvel.com/account)
-* Assigner votre clé à la variable d'environement `REACT_APP_MARVEL_API_KEY` dans votre fichier `.env`
+* Assigner votre clé à la variable d'environement `REACT_APP_MARVEL_API_KEY` dans votre fichier `.env.local`
 
 ### Base de données
 
