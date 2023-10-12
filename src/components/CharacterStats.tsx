@@ -1,5 +1,6 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { MarvelCharacter, useApiClient } from "../api-client";
+import { useQuery } from "@tanstack/react-query";
+import { type MarvelCharacter } from "@/lib/api-client";
+import { useApiClient } from "@/components/ApiClient";
 import { Puff } from "react-loader-spinner";
 import { FC } from "react";
 import { CharacterPortrait } from "./CharacterPortrait";
@@ -11,7 +12,7 @@ type CharacterStatsProps = {
 export const CharacterStats: FC<CharacterStatsProps> = ({ character }) => {
   const id = character.id;
   const apiClient = useApiClient();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   const weakerCharacters = useQuery({
     queryKey: ["weakerCharacters", { id }],

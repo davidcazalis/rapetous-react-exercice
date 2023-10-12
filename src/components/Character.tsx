@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { type MarvelCharacter } from "../api-client";
+import { type MarvelCharacter } from "@/lib/api-client";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { CharacterPortrait } from "./CharacterPortrait";
@@ -18,7 +18,6 @@ export const Character: FC<CharacterProps> = ({
   state,
 }) => {
   const isLeft = placement && placement === "left";
-  const isLooser = state && state === "looser";
   const isWinner = state && state === "winner";
 
   return (

@@ -6,12 +6,13 @@ import { FightsPage } from "./pages/Fights";
 import { CharactersPage } from "./pages/Characters";
 import bg from "./assets/bg-dual.jpeg";
 import clsx from "clsx";
+
 const Layout = () => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   return (
     <div
-      className={clsx({
+      className={clsx("pt-[88px]", {
         "text-white bg-cover bg-center font-body": isHomePage,
       })}
       style={
@@ -22,7 +23,9 @@ const Layout = () => {
           : {}
       }
     >
-      <Header />
+      <div className="absolute inset-0">
+        <Header />
+      </div>
       <main className="container mx-auto px-4 relative z-10">
         <Outlet />
       </main>
@@ -44,3 +47,5 @@ export const App = () => {
     </div>
   );
 };
+
+export default App;

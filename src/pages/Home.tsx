@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { useApiClient, type MarvelCharacter } from "../api-client";
+import { useApiClient } from "@/components/ApiClient";
+import { type MarvelCharacter } from "@/lib/api-client";
 import { Character } from "../components/Character";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -66,7 +67,7 @@ export const HomePage = () => {
   const displayWinner = winner && sendWinner.isSuccess;
 
   return (
-    <div className="min-h-screen w-full relative">
+    <div className="w-full relative h-[100svh]">
       <AnimatePresence>
         {loading && (
           <motion.div

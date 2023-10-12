@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { FC } from "react";
 import * as Avatar from "@radix-ui/react-avatar";
-import defaultAvatar from "../assets/default-avatar.jpeg";
+import defaultAvatar from "@/assets/default-avatar.jpeg";
 import { twMerge } from "tailwind-merge";
 
 type CharacterPortraitProps = {
