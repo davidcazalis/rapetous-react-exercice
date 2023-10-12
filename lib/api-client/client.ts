@@ -26,8 +26,8 @@ export class ApiClient {
 
   constructor() {
     this.client = createClient({
-      url: process.env.REACT_APP_API_URL ?? "libsql://",
-      authToken: process.env.REACT_APP_API_TOKEN,
+      url: import.meta.env.VITE_API_URL ?? "libsql://",
+      authToken: import.meta.env.VITE_API_TOKEN,
     });
 
     this.totalCharacters = 1563;
@@ -59,7 +59,7 @@ export class ApiClient {
   }) {
     const url = new URL(`http://gateway.marvel.com/v1/public/characters`);
 
-    url.searchParams.append("apikey", process.env.REACT_APP_MARVEL_API_KEY!);
+    url.searchParams.append("apikey", import.meta.env.VITE_MARVEL_API_KEY!);
 
     if (options.id) {
       url.pathname += `/${options.id}`;
@@ -115,7 +115,7 @@ export class ApiClient {
     }
   }
 
-  private async getRandomCharactersFromAPI(count: number = 1) {
+  private async getRandomCharactersFromAPI(count = 1) {
     const offset = getRandomNumber(this.totalCharacters, 1);
     return await this.getCharactersFromMarvelApi({ offset, limit: count }).then(
       (characters) => characters?.map(mappingMarvelApiToDBCharacter)

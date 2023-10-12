@@ -1,4 +1,4 @@
-import { useApiClient } from "./api-client";
+import { useApiClient } from "@/components/ApiClient";
 
 function App() {
   const client = useApiClient();

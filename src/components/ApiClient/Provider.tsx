@@ -1,5 +1,5 @@
-import { ReactNode, createContext, useContext } from "react";
-import ApiClient from "./client";
+import { ReactNode, createContext } from "react";
+import { type ApiClient } from "lib/api-client";
 
 type ApiClientProviderProps = {
   children: ReactNode;
@@ -17,14 +17,4 @@ export const ApiClientProvider = ({
       {children}
     </ApiClientContext.Provider>
   );
-};
-
-export const useApiClient = () => {
-  const apiClient = useContext(ApiClientContext);
-
-  if (!apiClient) {
-    throw new Error("useApiClient must be used within an ApiClientProvider");
-  }
-
-  return apiClient;
 };

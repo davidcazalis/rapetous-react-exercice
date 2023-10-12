@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
+import App from "@/App";
+import { ApiClient } from "@/lib/api-client";
+import { ApiClientProvider } from "@/components/ApiClient";
 
-import { ApiClient, ApiClientProvider } from "./api-client";
+import "@/index.css";
 
 const client = new ApiClient();
 
