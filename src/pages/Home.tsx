@@ -3,10 +3,11 @@ import { useApiClient, type MarvelCharacter } from "../api-client";
 import { Character } from "../components/Character";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { BigButton } from "../components/BigButton";
+import { BigButton, BigButtonLabel } from "../components/BigButton";
 import { TiRefresh } from "react-icons/ti";
 import clsx from "clsx";
 import { Puff } from "react-loader-spinner";
+import { CharacterStats } from "../components/CharacterStats";
 
 export const HomePage = () => {
   const apiClient = useApiClient();
@@ -50,7 +51,13 @@ export const HomePage = () => {
     setWinner(character);
   };
 
+  const handleNewFight = () => {
+    setWinner(undefined);
+  };
+
   const handleReset = () => {
+    setWinner(null);
+    queryClient.invalidateQueries(["randomCharacters"]);
     setWinner(undefined);
   };
 
@@ -59,7 +66,7 @@ export const HomePage = () => {
   const displayWinner = winner && sendWinner.isSuccess;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen w-full relative">
       <AnimatePresence>
         {loading && (
           <motion.div
@@ -70,19 +77,24 @@ export const HomePage = () => {
           </motion.div>
         )}
         {displayCharacters && !loading && (
-          <>
-            <div className="absolute z-10 inset-x-1/2 inset-y-3/4">
-              <BigButton className="flex " containerClassName="text-yellow-500">
-                <TiRefresh />
+          <motion.div
+            className="absolute w-full h-full"
+            key="characters"
+            initial={{ opacity: 0, y: -100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+          >
+            <div className="absolute left-1/2 -translate-y-1/2 -translate-x-1/2 z-20 top-[10%]">
+              <BigButton
+                className="text-yellow-500 hover:text-red-500"
+                onClick={handleReset}
+              >
+                <BigButtonLabel>
+                  <TiRefresh />
+                </BigButtonLabel>
               </BigButton>
             </div>
-            <motion.div
-              key="characters"
-              initial={{ opacity: 0, y: -100 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 50 }}
-              className="flex absolute justify-evenly items-center inset-0"
-            >
+            <div className="flex absolute justify-evenly items-center inset-0">
               {data?.map((character, index) => {
                 return (
                   <div
@@ -99,8 +111,8 @@ export const HomePage = () => {
                   </div>
                 );
               })}
-            </motion.div>
-          </>
+            </div>
+          </motion.div>
         )}
         {displayWinner && (
           <motion.div
@@ -110,6 +122,9 @@ export const HomePage = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0 }}
           >
+            <div>
+              <CharacterStats character={winner} />
+            </div>
             <Character character={winner} state={"winner"} />
             <motion.span
               initial={{
@@ -135,12 +150,13 @@ export const HomePage = () => {
               WIN !
             </motion.span>
             <BigButton
-              className="flex "
-              containerClassName="text-red-500"
-              onClick={handleReset}
+              className="text-red-500 hover:text-yellow-500"
+              onClick={handleNewFight}
             >
-              <TiRefresh />
-              Start a new fight !
+              <BigButtonLabel className="flex">
+                <TiRefresh />
+                Start a new fight !
+              </BigButtonLabel>
             </BigButton>
           </motion.div>
         )}

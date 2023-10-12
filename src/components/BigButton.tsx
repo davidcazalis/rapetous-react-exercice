@@ -12,24 +12,32 @@ export const BigButton: FC<BigButtonProps> = ({
   children,
   onClick,
   className,
-  containerClassName,
 }) => {
   return (
     <span
       onClick={onClick}
       className={twMerge(
         "inline-block py-4 px-6 relative big-button cursor-pointer",
-        containerClassName
+        className
       )}
     >
-      <span
-        className={twMerge(
-          "font-bold font-display text-4xl text-white",
-          className
-        )}
-      >
-        {children}
-      </span>
+      {children}
+    </span>
+  );
+};
+
+export const BigButtonLabel: FC<{
+  children: ReactNode;
+  className?: string;
+}> = ({ children, className }) => {
+  return (
+    <span
+      className={twMerge(
+        "font-bold font-display text-4xl text-white",
+        className
+      )}
+    >
+      {children}
     </span>
   );
 };
