@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "@/App";
+import App from "@/pages/Home";
 import { ApiClient } from "@/lib/api-client";
 import { ApiClientProvider } from "@/components/ApiClient";
 

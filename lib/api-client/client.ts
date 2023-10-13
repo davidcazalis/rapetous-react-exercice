@@ -59,7 +59,7 @@ export class ApiClient {
   }) {
     const url = new URL(`http://gateway.marvel.com/v1/public/characters`);
 
-    url.searchParams.append("apikey", import.meta.env.VITE_MARVEL_API_KEY!);
+    url.searchParams.append("apikey", import.meta.env.VITE_MARVEL_API_KEY);
 
     if (options.id) {
       url.pathname += `/${options.id}`;
@@ -243,6 +243,24 @@ export class ApiClient {
       });
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  public async getCharacterScore(characterId: number) {
+    try {
+      const score = await this.client.execute({
+        sql: "SELECT " +
+             "(SELECT COUNT(*) FROM marvel_characters_vote WHERE stronger_character_id = :id) AS victories, " +
+             "(SELECT COUNT(*) FROM marvel_characters_vote WHERE weaker_character_id = :id) AS lost",
+        args: {
+          id: characterId
+        }
+      });
+      return score.rows[0] as unknown as { victories: number, lost: number };
+    }
+    catch (error) {
+      console.log(error);
+      return { victories: 0, lost: 0 }
     }
   }
 
