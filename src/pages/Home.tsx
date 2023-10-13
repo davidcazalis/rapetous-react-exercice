@@ -1,14 +1,13 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { useApiClient } from "@/components/ApiClient";
 import { type MarvelCharacter } from "@/lib/api-client";
-import { Character } from "../components/Character";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { LayoutGroup, motion } from "framer-motion";
 import { BigButton, BigButtonLabel } from "../components/BigButton";
 import { TiRefresh } from "react-icons/ti";
-import clsx from "clsx";
 import { Puff } from "react-loader-spinner";
-import { CharacterStats } from "../components/CharacterStats";
+import { Versus } from "@/components/Versus";
+import { Winner } from "@/components/Winner";
 
 export const HomePage = () => {
   const apiClient = useApiClient();
@@ -67,25 +66,25 @@ export const HomePage = () => {
   const displayWinner = winner && sendWinner.isSuccess;
 
   return (
-    <div className="w-full relative h-[100svh]">
-      <AnimatePresence>
+    <div className="relative min-h-screen">
+      <LayoutGroup>
         {loading && (
           <motion.div
+            className="absolute flex inset-0 justify-center items-center"
             key="loading"
-            className="absolute inset-0 flex items-center justify-center"
           >
             <Puff width={120} height={120} color={"#ef4444"} visible={true} />
           </motion.div>
         )}
         {displayCharacters && !loading && (
           <motion.div
-            className="absolute w-full h-full"
+            className="absolute justify-center flex items-center w-full inset-0"
             key="characters"
             initial={{ opacity: 0, y: -100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
           >
-            <div className="absolute left-1/2 -translate-y-1/2 -translate-x-1/2 z-20 top-[10%]">
+            <div className="absolute left-1/2 -translate-y-1/2 -translate-x-1/2 z-20 bottom-[10%]">
               <BigButton
                 className="text-yellow-500 hover:text-red-500"
                 onClick={handleReset}
@@ -95,73 +94,20 @@ export const HomePage = () => {
                 </BigButtonLabel>
               </BigButton>
             </div>
-            <div className="flex absolute justify-evenly items-center inset-0">
-              {data?.map((character, index) => {
-                return (
-                  <div
-                    key={character.id}
-                    className={clsx("w-1/2 relative z-10", {
-                      "animate-pulse": sendWinner.isLoading,
-                    })}
-                  >
-                    <Character
-                      character={character}
-                      onClick={handleWinner}
-                      placement={index === 0 ? "left" : "right"}
-                    />
-                  </div>
-                );
-              })}
-            </div>
+            {data && !loading && (
+              <Versus
+                isLoading={loading}
+                left={data[0]}
+                right={data[1]}
+                onClick={handleWinner}
+              />
+            )}
           </motion.div>
         )}
         {displayWinner && (
-          <motion.div
-            className="absolute inset-0 flex flex-col justify-center items-center"
-            key="winner"
-            initial={{ opacity: 0, y: -100, scale: 0.5 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <div>
-              <CharacterStats character={winner} />
-            </div>
-            <Character character={winner} state={"winner"} />
-            <motion.span
-              initial={{
-                scale: 2,
-                fontSize: "800px",
-                color: "red",
-                translateY: "-500%",
-                rotate: -30,
-              }}
-              animate={{
-                scale: [2, 3, 1],
-                fontSize: "80px",
-                color: "white",
-                translateY: ["-500%", "0%", "-30%"],
-                rotate: 0,
-              }}
-              transition={{
-                duration: 0.5,
-                ease: "easeOut",
-              }}
-              className="font-display text-shadow--large"
-            >
-              WIN !
-            </motion.span>
-            <BigButton
-              className="text-red-500 hover:text-yellow-500"
-              onClick={handleNewFight}
-            >
-              <BigButtonLabel className="flex">
-                <TiRefresh />
-                Start a new fight !
-              </BigButtonLabel>
-            </BigButton>
-          </motion.div>
+          <Winner character={winner} onNewFight={handleNewFight} />
         )}
-      </AnimatePresence>
+      </LayoutGroup>
     </div>
   );
 };

@@ -71,7 +71,7 @@ export const Character: FC<CharacterProps> = ({
             opacity: [1],
           }}
           className={clsx(
-            "font-bold uppercase text-lg/4 p-4 border-4 border-black rounded max-w-md mt-4",
+            "font-bold uppercase text-lg/4 p-4 border-4 border-black rounded max-w-md mt-4 relative z-20",
             {
               "bg-blue-400 text-black": isLeft,
               "bg-yellow-400 text-black": !isLeft,

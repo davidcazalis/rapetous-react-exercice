@@ -148,7 +148,7 @@ export class ApiClient {
   }
 
   public async getRandomCharacter(excludeIds: number[] = []) {
-    const doNotSearchForCharacterWithoutVotes = Math.random() < 0.5;
+    const doNotSearchForCharacterWithoutVotes = Math.random() < 0.65;
 
     const randomCharacter = async () => {
       const characterFromDB = await this.getRandomCharacterFromDB();

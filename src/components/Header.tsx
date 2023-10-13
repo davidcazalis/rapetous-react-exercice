@@ -27,9 +27,6 @@ export const Header = () => {
   return (
     <header>
       <div className="container mx-auto flex justify-between py-6 px-4 font-body">
-        <h1 className="font-extrabold text-white bg-red-600 p-2 uppercase font-sans">
-          Baguarre
-        </h1>
         <nav role="navigation">
           <ul className="flex gap-x-4">
             <li>

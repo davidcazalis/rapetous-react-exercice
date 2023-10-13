@@ -10,10 +10,11 @@ import clsx from "clsx";
 const Layout = () => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
+
   return (
     <div
-      className={clsx("pt-[88px]", {
-        "text-white bg-cover bg-center font-body": isHomePage,
+      className={clsx("", {
+        "text-white bg-cover bg-center font-body pt-[88px]": isHomePage,
       })}
       style={
         isHomePage
@@ -23,7 +24,7 @@ const Layout = () => {
           : {}
       }
     >
-      <div className="absolute inset-0">
+      <div className="w-full absolute top-0">
         <Header />
       </div>
       <main className="container mx-auto px-4 relative z-10">

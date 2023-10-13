@@ -9,6 +9,7 @@ type CharacterPortraitProps = {
   size?: "small" | "medium" | "large" | "xl";
   avatar?: boolean;
   className?: string;
+  fallback?: string;
 } & React.ComponentProps<typeof Avatar.Root>;
 
 export const CharacterPortrait: FC<CharacterPortraitProps> = ({
@@ -16,6 +17,7 @@ export const CharacterPortrait: FC<CharacterPortraitProps> = ({
   size = "medium",
   avatar = false,
   className,
+  fallback,
   ...props
 }) => {
   const isDefault = src === null || src.includes("image_not_available");
@@ -37,6 +39,9 @@ export const CharacterPortrait: FC<CharacterPortraitProps> = ({
         src={isDefault ? defaultAvatar : src}
         className={clsx("object-cover w-full block")}
       />
+      <Avatar.Fallback className="bg-black text-yellow-500 uppercase font-bold w-full h-full flex justify-center items-center">
+        {fallback}
+      </Avatar.Fallback>
     </Avatar.Root>
   );
 };
