@@ -26,7 +26,10 @@ const HeaderLink: FC<{ children: ReactNode; to: string }> = ({
 export const Header = () => {
   return (
     <header>
-      <div className="container mx-auto flex justify-between py-6 px-4 font-body">
+      <div className="container mx-auto flex justify-between py-6 px-4 font-body items-center">
+        <h1 className="bg-red-500 text-white font-display uppercase py-2 px-4 font-bold text-2xl">
+          Bagarre!
+        </h1>
         <nav role="navigation">
           <ul className="flex gap-x-4">
             <li>

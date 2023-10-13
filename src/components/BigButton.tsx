@@ -17,7 +17,7 @@ export const BigButton: FC<BigButtonProps> = ({
     <span
       onClick={onClick}
       className={twMerge(
-        "inline-block py-4 px-6 relative big-button cursor-pointer",
+        "inline-block py-4 px-6 relative big-button cursor-pointer h-min",
         className
       )}
     >

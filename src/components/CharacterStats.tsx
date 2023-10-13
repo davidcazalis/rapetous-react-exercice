@@ -98,15 +98,15 @@ export const CharacterStats: FC<CharacterStatsProps> = ({ character }) => {
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       {isLoading && (
         <div className="absolute inset-0">
           <Puff width={64} height={64} color={"#ef4444"} visible={true} />
         </div>
       )}
       {!isLoading && (
-        <div className="flex w-full flex-col justify-center items-center">
-          <div className="font-body font-bold text-xl uppercase p-2 bg-blue-500 border-4 border-black text-black italic mb-8">
+        <div className="flex w-full flex-col items-start">
+          <div className="font-body font-bold text-sm uppercase p-2 bg-blue-500 border-4 border-black text-black italic mb-8">
             {comment}
           </div>
           <Tabs.Root defaultValue="victories" className="w-full">
@@ -114,7 +114,7 @@ export const CharacterStats: FC<CharacterStatsProps> = ({ character }) => {
               <Tabs.Trigger
                 disabled={weakestCount === 0}
                 className={
-                  "flex items-center uppercase p-2 bg-white/50 font-bold  data-[state=active]:bg-white text-black rounded-tl-lg border-t-4 border-l-4 border-r-2 border-black"
+                  "flex items-center uppercase p-2 font-bold  data-[state=active]:bg-white data-[state=active]:text-black text-slate-800 bg-slate-300 rounded-tl-lg border-t-4 border-l-4 border-r-2 border-black"
                 }
                 value="victories"
               >
@@ -125,7 +125,7 @@ export const CharacterStats: FC<CharacterStatsProps> = ({ character }) => {
               </Tabs.Trigger>
               <Tabs.Trigger
                 disabled={strongestCount === 0}
-                className="flex items-center uppercase p-2 bg-white/50 font-bold  data-[state=active]:bg-white text-black rounded-tr-lg border-t-4 border-r-4 border-black"
+                className="flex items-center uppercase p-2 font-bold  data-[state=active]:bg-white data-[state=active]:text-black text-slate-800 bg-slate-300 rounded-tr-lg border-t-4 border-r-4 border-black"
                 value="defeats"
               >
                 <IoSkullSharp />
@@ -216,13 +216,13 @@ function getComment({
       } else {
         const ratio = victories / defeats;
         if (ratio > 10) {
-          return "Is Godlike !";
+          return "Godlike !";
         } else if (ratio > 5) {
-          return "Is Unstoppable !";
+          return "Unstoppable !";
         } else if (ratio > 2) {
-          return "Is Dominating !";
+          return "Dominating !";
         } else if (ratio > 1) {
-          return "on a Rampage !";
+          return "On a Rampage !";
         } else if (ratio < 1) {
           return "Often beaten, but never defeated. Weel, almost never...";
         }

@@ -21,46 +21,60 @@ export const Winner: FC<WinnerProps> = ({ character, onNewFight }) => {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="pb-8">
-        <BigButton
-          className="text-yellow-500 hover:text-red-500"
-          onClick={onNewFight}
-        >
-          <BigButtonLabel className="flex">
-            <TiRefresh />
-            Start a new fight !
-          </BigButtonLabel>
-        </BigButton>
-      </div>
-
       <motion.span
+        key="winner-title"
         initial={{
-          scale: 2,
-          fontSize: "800px",
+          scale: 10,
           color: "red",
-          translateY: "-500%",
-          rotate: -30,
+          translateY: "200%",
         }}
         animate={{
-          scale: [2, 3, 1],
-          fontSize: "80px",
+          scale: 1,
           color: "#eab308",
-          translateY: ["-500%", "100%", "30%"],
-          rotate: 0,
+          translateY: "46%",
         }}
         transition={{
           duration: 0.5,
           ease: "easeOut",
         }}
-        className="font-display text-shadow--large absolute"
+        className="font-display text-shadow--large text-[100px] z-10"
       >
         WINNER
       </motion.span>
 
-      <Character character={character} state={"winner"} />
+      <motion.div
+        key="character"
+        initial={{
+          scale: 0,
+          opacity: 0,
+        }}
+        animate={{
+          scale: 1,
+          opacity: 1,
+        }}
+        transition={{
+          duration: 0.25,
+          ease: "easeOut",
+        }}
+      >
+        <Character character={character} state={"winner"} />
+      </motion.div>
 
-      <div className="pb-6 w-full">
-        <CharacterStats character={character} />
+      <div className="w-full flex gap-x-8 pt-8">
+        <div className="w-full">
+          <CharacterStats character={character} />
+        </div>
+        <div className="w-full flex justify-end items-top">
+          <BigButton
+            className="text-yellow-500 hover:text-green-500"
+            onClick={onNewFight}
+          >
+            <BigButtonLabel className="flex">
+              <TiRefresh />
+              Start a new fight !
+            </BigButtonLabel>
+          </BigButton>
+        </div>
       </div>
     </motion.div>
   );

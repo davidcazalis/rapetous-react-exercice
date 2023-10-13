@@ -4,6 +4,7 @@ import { ErrorNotFoundPage } from "./pages/404";
 import { Header } from "./components/Header";
 import { FightsPage } from "./pages/Fights";
 import { CharactersPage } from "./pages/Characters";
+import { motion } from "framer-motion";
 import bg from "./assets/bg-dual.jpeg";
 import clsx from "clsx";
 
@@ -13,18 +14,30 @@ const Layout = () => {
 
   return (
     <div
-      className={clsx("", {
-        "text-white bg-cover bg-center font-body pt-[88px]": isHomePage,
+      className={clsx("bg-cover bg-center font-body", {
+        "pt-[88px] relative": isHomePage,
       })}
-      style={
-        isHomePage
-          ? {
-              backgroundImage: `url(${bg})`,
-            }
-          : {}
-      }
     >
-      <div className="w-full absolute top-0">
+      {isHomePage && (
+        <motion.div
+          initial={{ opacity: 0.8, scale: 1.2, filter: "blur(2px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{
+            duration: 20,
+            ease: "easeOut",
+            repeatDelay: 0.5,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+          className="w-full absolute top-0 left-0 h-full bg-cover bg-center"
+          style={{ backgroundImage: `url(${bg})` }}
+        />
+      )}
+      <div
+        className={clsx({
+          "w-full absolute top-0": isHomePage,
+        })}
+      >
         <Header />
       </div>
       <main className="container mx-auto px-4 relative z-10">

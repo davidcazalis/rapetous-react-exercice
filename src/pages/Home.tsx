@@ -66,7 +66,7 @@ export const HomePage = () => {
   const displayWinner = winner && sendWinner.isSuccess;
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen py-8">
       <LayoutGroup>
         {loading && (
           <motion.div
@@ -84,16 +84,6 @@ export const HomePage = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
           >
-            <div className="absolute left-1/2 -translate-y-1/2 -translate-x-1/2 z-20 bottom-[10%]">
-              <BigButton
-                className="text-yellow-500 hover:text-red-500"
-                onClick={handleReset}
-              >
-                <BigButtonLabel>
-                  <TiRefresh />
-                </BigButtonLabel>
-              </BigButton>
-            </div>
             {data && !loading && (
               <Versus
                 isLoading={loading}
@@ -102,6 +92,17 @@ export const HomePage = () => {
                 onClick={handleWinner}
               />
             )}
+
+            <div className="absolute left-1/2 -translate-y-1/2 -translate-x-1/2 z-20 bottom-0">
+              <BigButton
+                className="text-yellow-500 hover:text-blue-500"
+                onClick={handleReset}
+              >
+                <BigButtonLabel>
+                  <TiRefresh />
+                </BigButtonLabel>
+              </BigButton>
+            </div>
           </motion.div>
         )}
         {displayWinner && (
