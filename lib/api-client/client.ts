@@ -45,8 +45,8 @@ export class ApiClient {
     return characters.filter((character) => {
       return (
         !charactersIds.includes(character.id) &&
-        character.comics.available > 60 &&
-        character.stories.available > 120
+        character.comics.available > 36 &&
+        character.stories.available > 72
       );
     });
   }
@@ -115,7 +115,7 @@ export class ApiClient {
     }
   }
 
-  private async getRandomCharactersFromAPI(count = 1) {
+  public async getRandomCharactersFromAPI(count = 1) {
     const offset = getRandomNumber(this.totalCharacters, 1);
     return await this.getCharactersFromMarvelApi({ offset, limit: count }).then(
       (characters) => characters?.map(mappingMarvelApiToDBCharacter)
@@ -260,7 +260,7 @@ export class ApiClient {
   public async getCharactersWithoutVotes() {
     try {
       const characters = await this.client.execute(
-        "SELECT * FROM marvel_characters WHERE id NOT IN (SELECT stronger_character_id FROM marvel_characters_vote)"
+        "SELECT * FROM marvel_characters WHERE id NOT IN (SELECT stronger_character_id FROM marvel_characters_vote) AND id NOT IN (SELECT weaker_character_id FROM marvel_characters_vote)"
       );
       return characters.rows as unknown as MarvelCharacter[];
     } catch (error) {
