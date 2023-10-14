@@ -69,8 +69,8 @@ export const HomePage = () => {
   const displayWinner = winner && sendWinner.isSuccess;
 
   return (
-    <>
-      <div className="relative min-h-screen py-8">
+    <div className="overflow-hidden">
+      <div className="py-8">
         <LayoutGroup>
           {loading && (
             <motion.div
@@ -114,7 +114,7 @@ export const HomePage = () => {
           )}
         </LayoutGroup>
       </div>
-      <Background index={backgroundIndex} />
-    </>
+      <Background index={backgroundIndex} winner={winner} />
+    </div>
   );
 };

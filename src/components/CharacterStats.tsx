@@ -105,12 +105,12 @@ export const CharacterStats: FC<CharacterStatsProps> = ({ character }) => {
         </div>
       )}
       {!isLoading && (
-        <div className="flex w-full flex-col items-start">
+        <div className="flex w-full flex-col items-center">
           <div className="font-body font-bold text-sm uppercase p-2 bg-blue-500 border-4 border-black text-black italic mb-8">
             {comment}
           </div>
           <Tabs.Root defaultValue="victories" className="w-full">
-            <Tabs.List className="flex">
+            <Tabs.List className="flex justify-center">
               <Tabs.Trigger
                 disabled={weakestCount === 0}
                 className={
@@ -135,7 +135,7 @@ export const CharacterStats: FC<CharacterStatsProps> = ({ character }) => {
                 </span>
               </Tabs.Trigger>
             </Tabs.List>
-            <div className="pt-2 px-2 pb-6 bubble-shadow border-4 border-black bg-white/90 rounded-tr-lg rounded-br-lg rounded-bl-lg">
+            <div className="pt-2 px-2 pb-6 bubble-shadow border-4 border-black bg-white/90 rounded-lg">
               <Tabs.Content value="victories" className="p-2">
                 <CharactersList characters={weakestCharacters} />
               </Tabs.Content>

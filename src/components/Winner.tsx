@@ -43,6 +43,7 @@ export const Winner: FC<WinnerProps> = ({ character, onNewFight }) => {
       </motion.span>
 
       <motion.div
+        className="flex justify-center flex-col items-center"
         key="character"
         initial={{
           scale: 0,
@@ -60,21 +61,18 @@ export const Winner: FC<WinnerProps> = ({ character, onNewFight }) => {
         <Character character={character} state={"winner"} />
       </motion.div>
 
-      <div className="w-full flex gap-x-8 pt-8">
-        <div className="w-full">
-          <CharacterStats character={character} />
-        </div>
-        <div className="w-full flex justify-end items-top">
-          <BigButton
-            className="text-yellow-500 hover:text-green-500"
-            onClick={onNewFight}
-          >
-            <BigButtonLabel className="flex">
-              <TiRefresh />
-              Start a new fight !
-            </BigButtonLabel>
-          </BigButton>
-        </div>
+      <div className="flex flex-col justify-center gap-x-8 pt-6 max-w-md">
+        <CharacterStats character={character} />
+
+        <BigButton
+          className="text-green-500 hover:text-yellow-500 mt-12"
+          onClick={onNewFight}
+        >
+          <BigButtonLabel className="flex">
+            <TiRefresh />
+            Start a new fight !
+          </BigButtonLabel>
+        </BigButton>
       </div>
     </motion.div>
   );

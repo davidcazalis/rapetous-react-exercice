@@ -25,7 +25,7 @@ export const Versus: FC<VersusProps> = ({
       <div className="w-1/2">
         <Character character={left} onClick={onClick} placement="left" />
       </div>
-      <span className="absolute z-10 flex justify-center items-center text-[25vw] font-display vs left-1/2 -translate-x-1/2 -translate-y-1/4">
+      <span className="absolute z-10 flex justify-center items-center text-[400px] font-display vs left-1/2 -translate-x-1/2 -translate-y-1/4 max-2xl:text-[25vw]">
         VS
       </span>
       <div className="w-1/2">

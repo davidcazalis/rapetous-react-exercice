@@ -50,7 +50,7 @@ export const Character: FC<CharacterProps> = ({
       >
         <h2
           className={clsx(
-            "font-extrabold font-display text-shadow--large relative z-20 -mt-8",
+            "font-extrabold font-display text-shadow--large relative z-20 -mt-8 max-w-xl",
             {
               "text-6xl": !state,
               "text-8xl": isWinner,
@@ -60,7 +60,7 @@ export const Character: FC<CharacterProps> = ({
           {character.name}
         </h2>
       </motion.div>
-      {character.description && !state && (
+      {character.description && character.description !== " " && !state && (
         <motion.p
           initial={{
             x: isLeft ? -50 : 50,

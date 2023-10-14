@@ -4,6 +4,8 @@
 
 @layer base {
   body {
+    min-height: 100vh;
+    overflow: auto;
     @apply text-white bg-blue-900 font-body;
   }
 }
@@ -30,6 +32,7 @@
   .character-portrait-effect {
     filter: drop-shadow(0 0 0 #000);
     transition: all ease-in-out 0.15s;
+    box-shadow: 0px 0px 0 0px #000;
   }
 
   .character-portrait-effect:hover {
@@ -37,11 +40,11 @@
   }
 
   .character-portrait-effect--left:hover {
-    filter: drop-shadow(10px 15px 0 #2563eb);
+    box-shadow: 0px 0px 0 30px #2563eb;
   }
 
   .character-portrait-effect--right:hover {
-    filter: drop-shadow(-10px 15px 0 #eab308);
+    box-shadow: 0px 0px 0 30px #eab308;
   }
 
   .bubble-shadow {
