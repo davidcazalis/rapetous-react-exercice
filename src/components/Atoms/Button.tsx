@@ -1,7 +1,7 @@
 import { MdiReactIconComponentType } from 'mdi-react';
 import React, { FC } from 'react';
 
-type ButtonProps = {
+export type ButtonProps = {
   icon?: MdiReactIconComponentType;
   label: string;
   onClick: () => void;

@@ -1,21 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "@/pages/Home";
-import { ApiClient } from "@/lib/api-client";
-import { ApiClientProvider } from "@/components/ApiClient";
+import { ApiClientProvider } from '@/components/ApiClient';
+import { ApiClient } from '@/lib/api-client';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
-import "@/index.css";
+import '@/index.css';
+import BattleRouter from './routes/router';
 
 const client = new ApiClient();
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>
     <ApiClientProvider client={client}>
-      <App />
+      <BattleRouter />
     </ApiClientProvider>
   </React.StrictMode>
 );

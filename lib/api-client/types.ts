@@ -52,4 +52,6 @@ export type MarvelCharacter = {
   description: string;
   image_url: string | null;
   created_at?: string;
+  victories?: number;
+  lost?: number;
 };

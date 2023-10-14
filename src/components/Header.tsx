@@ -1,7 +1,7 @@
-import MarvelLogo from '../resources/logo-marvel.svg';
-import Button from './Atoms/Button';
+import PodiumIcon from 'mdi-react/PodiumIcon';
 import SwordCross from 'mdi-react/SwordCrossIcon';
-import AccountGroup from 'mdi-react/AccountGroupIcon';
+import MarvelLogo from '../resources/logo-marvel.svg';
+import LinkButton from './Atoms/LinkButton';
 
 const Header = () => {
   return (
@@ -12,16 +12,16 @@ const Header = () => {
         src={MarvelLogo}
       />
       <div className="w-full flex flex-row justify-end p-4">
-        <Button
+        <LinkButton
           label="Fights"
-          onClick={() => false}
           icon={SwordCross}
+          link="/fight"
         />
         <span className="ml-2">
-          <Button
-            label="Characters"
-            onClick={() => false}
-            icon={AccountGroup}
+          <LinkButton
+            label="Ranking"
+            icon={PodiumIcon}
+            link="/ranking"
           />
         </span>
       </div>

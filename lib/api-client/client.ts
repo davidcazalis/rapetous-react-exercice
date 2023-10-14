@@ -250,8 +250,8 @@ export class ApiClient {
     try {
       const score = await this.client.execute({
         sql: "SELECT " +
-             "(SELECT COUNT(*) FROM marvel_characters_vote WHERE stronger_character_id = :id) AS victories, " +
-             "(SELECT COUNT(*) FROM marvel_characters_vote WHERE weaker_character_id = :id) AS lost",
+          "(SELECT COUNT(*) FROM marvel_characters_vote WHERE stronger_character_id = :id) AS victories, " +
+          "(SELECT COUNT(*) FROM marvel_characters_vote WHERE weaker_character_id = :id) AS lost",
         args: {
           id: characterId
         }
@@ -267,7 +267,10 @@ export class ApiClient {
   public async getCharactersByVotes() {
     try {
       const characters = await this.client.execute(
-        "SELECT marvel_characters.*, COUNT(marvel_characters_vote.stronger_character_id) as victories FROM marvel_characters LEFT JOIN marvel_characters_vote ON marvel_characters.id = marvel_characters_vote.stronger_character_id GROUP BY marvel_characters.id ORDER BY victories DESC"
+        "SELECT *, " +
+        "(SELECT COUNT(*) FROM marvel_characters_vote WHERE stronger_character_id = marvel_characters.id) AS victories, " +
+        "(SELECT COUNT(*) FROM marvel_characters_vote WHERE weaker_character_id = marvel_characters.id) AS lost " +
+        "FROM marvel_characters "
       );
       return characters.rows as unknown as MarvelCharacter[];
     } catch (error) {
