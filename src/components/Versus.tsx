@@ -18,7 +18,7 @@ export const Versus: FC<VersusProps> = ({
 }) => {
   return (
     <div
-      className={clsx("flex relative w-full", {
+      className={clsx("flex w-full", {
         "animate-pulse": isLoading,
       })}
     >

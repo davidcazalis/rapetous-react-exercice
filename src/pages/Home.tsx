@@ -8,6 +8,7 @@ import { TiRefresh } from "react-icons/ti";
 import { Puff } from "react-loader-spinner";
 import { Versus } from "@/components/Versus";
 import { Winner } from "@/components/Winner";
+import { Background } from "@/components/Background";
 
 export const HomePage = () => {
   const apiClient = useApiClient();
@@ -15,6 +16,7 @@ export const HomePage = () => {
   const [winner, setWinner] = useState<MarvelCharacter | undefined | null>(
     undefined
   );
+  const [backgroundIndex, setBackgroundIndex] = useState<number>(Math.random());
 
   const { isLoading, data, isFetching } = useQuery({
     queryKey: ["randomCharacters", { count: 2 }],
@@ -53,12 +55,13 @@ export const HomePage = () => {
 
   const handleNewFight = () => {
     setWinner(undefined);
+    setBackgroundIndex(Math.random());
   };
 
   const handleReset = () => {
     setWinner(null);
     queryClient.invalidateQueries(["randomCharacters"]);
-    setWinner(undefined);
+    handleNewFight();
   };
 
   const loading = isLoading || isFetching;
@@ -66,49 +69,52 @@ export const HomePage = () => {
   const displayWinner = winner && sendWinner.isSuccess;
 
   return (
-    <div className="relative min-h-screen py-8">
-      <LayoutGroup>
-        {loading && (
-          <motion.div
-            className="absolute flex inset-0 justify-center items-center"
-            key="loading"
-          >
-            <Puff width={120} height={120} color={"#ef4444"} visible={true} />
-          </motion.div>
-        )}
-        {displayCharacters && !loading && (
-          <motion.div
-            className="absolute justify-center flex items-center w-full inset-0"
-            key="characters"
-            initial={{ opacity: 0, y: -100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-          >
-            {data && !loading && (
-              <Versus
-                isLoading={loading}
-                left={data[0]}
-                right={data[1]}
-                onClick={handleWinner}
-              />
-            )}
+    <>
+      <div className="relative min-h-screen py-8">
+        <LayoutGroup>
+          {loading && (
+            <motion.div
+              className="absolute flex inset-0 justify-center items-center"
+              key="loading"
+            >
+              <Puff width={120} height={120} color={"#ef4444"} visible={true} />
+            </motion.div>
+          )}
+          {displayCharacters && !loading && (
+            <motion.div
+              className="absolute justify-center flex items-center w-full inset-0"
+              key="characters"
+              initial={{ opacity: 0, y: -100 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+            >
+              {data && !loading && (
+                <Versus
+                  isLoading={loading}
+                  left={data[0]}
+                  right={data[1]}
+                  onClick={handleWinner}
+                />
+              )}
 
-            <div className="absolute left-1/2 -translate-y-1/2 -translate-x-1/2 z-20 bottom-0">
-              <BigButton
-                className="text-yellow-500 hover:text-blue-500"
-                onClick={handleReset}
-              >
-                <BigButtonLabel>
-                  <TiRefresh />
-                </BigButtonLabel>
-              </BigButton>
-            </div>
-          </motion.div>
-        )}
-        {displayWinner && (
-          <Winner character={winner} onNewFight={handleNewFight} />
-        )}
-      </LayoutGroup>
-    </div>
+              <div className="absolute left-1/2 -translate-y-1/2 -translate-x-1/2 z-20 bottom-0">
+                <BigButton
+                  className="text-yellow-500 hover:text-blue-500"
+                  onClick={handleReset}
+                >
+                  <BigButtonLabel>
+                    <TiRefresh />
+                  </BigButtonLabel>
+                </BigButton>
+              </div>
+            </motion.div>
+          )}
+          {displayWinner && (
+            <Winner character={winner} onNewFight={handleNewFight} />
+          )}
+        </LayoutGroup>
+      </div>
+      <Background index={backgroundIndex} />
+    </>
   );
 };

@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply text-white bg-blue-900;
+    @apply text-white bg-blue-900 font-body;
   }
 }
 
@@ -41,7 +41,7 @@
   }
 
   .character-portrait-effect--right:hover {
-    filter: drop-shadow(-10px 15px 0 #ef4444);
+    filter: drop-shadow(-10px 15px 0 #eab308);
   }
 
   .bubble-shadow {
