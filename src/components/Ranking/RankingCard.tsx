@@ -1,5 +1,5 @@
 import { MarvelCharacter } from '@/lib/api-client';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Avatar from '../Atoms/Avatar';
 
 type RankingCardProps = {
@@ -8,8 +8,13 @@ type RankingCardProps = {
 };
 
 const RankingCard: FC<RankingCardProps> = ({ character, rank }) => {
+  const [isHover, setIsHover] = useState(false);
+
   return (
-    <div className="p-4 border-[1px] rounded-xl mb-4 flex flex-row items-center w-[400px] shadow-sm bg-slate-50 ">
+    <div
+      className={`p-4 border-[1px] rounded-xl mb-4 flex flex-row items-center w-[400px] shadow-sm bg-slate-50 ${isHover ? 'shadow-xl border-gray-400' : ''}`}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}>
       <div className="rounded-full border-[1px] w-[30px] h-[30px] border-black flex flex-col justify-center text-center mr-2 font-bold">{rank}</div>
       <Avatar
         character={character}

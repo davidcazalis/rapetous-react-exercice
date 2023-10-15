@@ -1,9 +1,8 @@
-import { FC, useEffect, useState } from 'react';
-import Button from '../Atoms/Button';
-import Avatar from '../Atoms/Avatar';
-import SwordCross from 'mdi-react/SwordCrossIcon';
 import { MarvelCharacter } from '@/lib/api-client';
+import { FC, useEffect, useState } from 'react';
 import { useApiClient } from '../ApiClient';
+import Avatar from '../Atoms/Avatar';
+import Loader from '../Atoms/Loader';
 
 type WinnerProps = {
   winner: MarvelCharacter;
@@ -13,12 +12,15 @@ type WinnerProps = {
 const Winner: FC<WinnerProps> = ({ winner, onRestore }) => {
   const client = useApiClient();
   const [{ lost, victories }, setScore] = useState<{ victories: number; lost: number }>({ lost: 0, victories: 0 });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     client.getCharacterScore(winner.id).then((result) => {
       setScore({ ...result });
+      setIsLoading(false);
+      setTimeout(onRestore, 5000);
     });
-  }, [winner, client]);
+  }, [winner, client, onRestore]);
 
   return (
     <>
@@ -31,20 +33,15 @@ const Winner: FC<WinnerProps> = ({ winner, onRestore }) => {
           <div className="text-center font-bold mb-4 underline underline-offset-2 mt-2">{winner.name}</div>
           <div className="grid grid-cols-2">
             <span>Victories :</span>
-            <span>{victories}</span>
+            {!isLoading && <span>{victories}</span>}
+            {isLoading && <Loader />}
           </div>
           <div className="grid grid-cols-2">
             <span>Lost :</span>
-            <span>{lost}</span>
+            {!isLoading && <span>{lost}</span>}
+            {isLoading && <Loader />}
           </div>
         </div>
-      </div>
-      <div className="flex flex-row justify-center mt-10">
-        <Button
-          icon={SwordCross}
-          label="New fight"
-          onClick={onRestore}
-        />
       </div>
     </>
   );
