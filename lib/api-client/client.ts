@@ -312,6 +312,40 @@ export class ApiClient {
       console.error(error);
     }
   }
+
+  public async getCharacterWin(id: number) {
+    try {
+      const request = await this.client.execute({
+        sql:
+          "SELECT * " +
+          "FROM marvel_characters " +
+          "WHERE marvel_characters.id in (SELECT weaker_character_id FROM marvel_characters_vote WHERE stronger_character_id = :id)",
+        args: {
+          id
+        }
+      });
+      return request.rows as unknown as MarvelCharacter[] ?? [];
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  public async getCharacterLoss(id: number) {
+    try {
+      const request = await this.client.execute({
+        sql:
+          "SELECT * " +
+          "FROM marvel_characters " +
+          "WHERE marvel_characters.id in (SELECT stronger_character_id FROM marvel_characters_vote WHERE weaker_character_id = :id)",
+        args: {
+          id
+        }
+      });
+      return request.rows as unknown as MarvelCharacter[] ?? [];
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 export default ApiClient;

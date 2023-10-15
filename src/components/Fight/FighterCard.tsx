@@ -17,7 +17,7 @@ const FighterCard: FC<CharacterCardProps> = ({ character, onClick }) => {
           onClick={onClick}
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}>
-          <Avatar character={character} outlined />
+          <Avatar character={character} outlined size='large' />
         </span>
       </div>
       <div className={`text-center font-bold mb-4 ${isHover ? 'underline underline-offset-2' : ''}`}>{character.name}</div>

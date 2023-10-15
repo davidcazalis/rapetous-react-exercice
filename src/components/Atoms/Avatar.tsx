@@ -4,11 +4,11 @@ import { FC } from 'react';
 type AvatarProps = {
   character: MarvelCharacter;
   outlined?: boolean;
-  dense?: boolean;
+  size: 'large' | 'medium' | 'dense';
 };
 
-const Avatar: FC<AvatarProps> = ({ character: { image_url, id }, outlined = false, dense = false }) => {
-  const settings = dense ? `max-w-[80px] max-h-[80px]` : 'max-w-[150px] max-h-[150px]';
+const Avatar: FC<AvatarProps> = ({ character: { image_url, id }, size, outlined = false }) => {
+  const settings = size === 'medium' ? `max-w-[80px] max-h-[80px]` : size === 'large' ? 'max-w-[150px] max-h-[150px]' : 'max-w-[30px] max-h-[30px]';
   return (
     <img
       alt={id.toString()}

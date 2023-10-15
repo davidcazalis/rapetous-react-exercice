@@ -28,7 +28,7 @@ const Winner: FC<WinnerProps> = ({ winner, onRestore }) => {
         <div className="border-[1px] rounded-xl w-fit p-6 shadow-lg bg-gray-50">
           <div className="text-[32px] font-bold uppercase italic">Winner!!!</div>
           <div className="flex flex-row justify-center mt-4">
-            <Avatar character={winner} />
+            <Avatar character={winner} size='large' />
           </div>
           <div className="text-center font-bold mb-4 underline underline-offset-2 mt-2">{winner.name}</div>
           <div className="grid grid-cols-2">
