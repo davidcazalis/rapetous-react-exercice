@@ -1,8 +1,8 @@
 import { MarvelCharacter } from '@/lib/api-client';
 import { FC, useEffect, useState } from 'react';
 import { useApiClient } from '../ApiClient';
-import Avatar from '../Atoms/Avatar';
 import Loader from '../Atoms/Loader';
+import { Avatar, Card, CardContent } from '@mui/material';
 
 type WinnerProps = {
   winner: MarvelCharacter;
@@ -23,27 +23,32 @@ const Winner: FC<WinnerProps> = ({ winner, onRestore }) => {
   }, [winner, client, onRestore]);
 
   return (
-    <>
-      <div className="mt-10 flex flex-row justify-center">
-        <div className="border-[1px] rounded-xl w-fit p-6 shadow-lg bg-gray-50">
+    <div className="flex flew-row justify-center mt-10">
+      <Card
+        className="inline-block p-2 !bg-zinc-50"
+        variant="outlined">
+        <CardContent>
           <div className="text-[32px] font-bold uppercase italic">Winner!!!</div>
-          <div className="flex flex-row justify-center mt-4">
-            <Avatar character={winner} size='large' />
+          <div className="flex flew-row justify-center mt-2">
+            <Avatar
+              src={winner.image_url ?? ''}
+              sx={{ width: 120, height: 120 }}
+            />
           </div>
           <div className="text-center font-bold mb-4 underline underline-offset-2 mt-2">{winner.name}</div>
           <div className="grid grid-cols-2">
             <span>Victories :</span>
-            {!isLoading && <span>{victories}</span>}
+            {!isLoading && <span className="ml-2">{victories}</span>}
             {isLoading && <Loader />}
           </div>
           <div className="grid grid-cols-2">
             <span>Lost :</span>
-            {!isLoading && <span>{lost}</span>}
+            {!isLoading && <span className="ml-2">{lost}</span>}
             {isLoading && <Loader />}
           </div>
-        </div>
-      </div>
-    </>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 

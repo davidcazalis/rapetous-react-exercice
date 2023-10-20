@@ -41,6 +41,7 @@ const Ranking: FC<RankingProps> = ({ characters }) => {
         <HistoryDialog
           character={displayedHistory}
           onClose={() => setDisplayedHistory(undefined)}
+          onClickCharacter={(characterId: number) => setDisplayedHistory(characters.filter((character) => character.id === characterId)[0])}
         />
       )}
     </>

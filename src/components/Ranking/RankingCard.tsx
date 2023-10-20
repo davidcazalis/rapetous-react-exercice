@@ -1,6 +1,6 @@
 import { MarvelCharacter } from '@/lib/api-client';
+import Avatar from '@mui/material/Avatar';
 import { FC, useState } from 'react';
-import Avatar from '../Atoms/Avatar';
 
 type RankingCardProps = {
   character: MarvelCharacter;
@@ -20,8 +20,8 @@ const RankingCard: FC<RankingCardProps> = ({ character, onClick, rank }) => {
         onClick={onClick}>
         <div className="rounded-full border-[1px] w-[30px] h-[30px] border-black flex flex-col justify-center text-center mr-2 font-bold">{rank}</div>
         <Avatar
-          character={character}
-          size='medium'
+          src={character.image_url ?? ''}
+          sx={{ width: 80, height: 80 }}
         />
         <div className="flex flex-col justify-center ml-4">
           <div className="text-[18px] font-bold">{character.name}</div>

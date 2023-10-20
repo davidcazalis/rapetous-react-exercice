@@ -1,10 +1,10 @@
 import FighterCard from './FighterCard';
 import { FC, useCallback, useEffect, useState } from 'react';
-import Button from '../Atoms/Button';
-import RestoreIcon from 'mdi-react/RestoreIcon';
+import LoopIcon from '@mui/icons-material/Loop';
 import Winner from './Winner';
 import { MarvelCharacter } from '@/lib/api-client';
 import { useApiClient } from '../ApiClient';
+import Button from '@mui/material/Button';
 
 type FightZoneProps = {
   characters: MarvelCharacter[];
@@ -30,10 +30,12 @@ const FightZone: FC<FightZoneProps> = ({ characters }) => {
           <div className="mt-10 text-center text-[32px] font-bold uppercase italic">Who wins?!</div>
           <div className="flex flex-row justify-center pt-10">
             <Button
-              icon={RestoreIcon}
-              label="OSEF"
-              onClick={() => shuffle()}
-            />
+              variant="outlined"
+              size="small"
+              endIcon={<LoopIcon />}
+              onClick={() => shuffle()}>
+              OSEF
+            </Button>
           </div>
 
           <div className="flex flex-row mt-10">
